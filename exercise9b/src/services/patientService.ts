@@ -3,7 +3,7 @@
 import patientData from '../../data/patients';
 import { NewPatientEntry, PatientEntry, NonSensitivePatientEntry } from '../types';
 import {v1 as uuid} from 'uuid';
-const patients: Array<PatientEntry> = patientData as Array<PatientEntry>;
+const patients: Array<PatientEntry> = patientData ;
 
 const getPatients = (): Array<PatientEntry> => {
     return patients;
