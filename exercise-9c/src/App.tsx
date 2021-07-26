@@ -1,33 +1,9 @@
 import React from 'react';
+import Content from './Components/Content';
+import { CoursePart } from './types';
 
 const App = () => {
   const courseName = "Half Stack Application development";
-
-  interface CoursePartBase {
-    name : string;
-    exerciseCount: number;
-    type: string;
-  }
-
-  interface CourseNormalPart extends CoursePartBase{
-    type: "normal";
-  }
-
-  interface CourseProjectPart extends CoursePartBase{
-    type: "groupProject";
-    groupProjectCount: number;
-  }
-
-  interface CourseSubmissionPart extends CoursePartBase{
-    type: "submission";
-    exerciseSubmissionLink: string;
-  }
-
-  interface CourseDescriptionPart extends CoursePartBase{
-    description : string;
-  }
-
-  type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart | CourseDescriptionPart;
   
   // this is the new coursePart variable
 const courseParts: CoursePart[] = [
@@ -55,6 +31,13 @@ const courseParts: CoursePart[] = [
     description: "Confusing description",
     exerciseSubmissionLink: "https://fake-exercise-submit.made-up-url.dev",
     type: "submission"
+  },
+  {
+    name: "Backend development",
+    exerciseCount: 21,
+    description: "Typing the backend",
+    requirements: ["nodejs", "jest"],
+    type: "special"
   }
 ]
 
@@ -69,31 +52,7 @@ const courseParts: CoursePart[] = [
       </>
     )
   }
-
-  interface ContentProps{
-    courseParts: CoursePart[];
-  }
-  const Content = ({courseParts}: ContentProps) : JSX.Element => {
-    return(
-      <>
-      {/* {courseParts.map((coursePart,index : number) =>
-        <p key={index}>{coursePart.name} {coursePart.exerciseCount}</p>
-        )} */}
-      {courseParts.forEach(part => {
-        switch(part.type){
-          case "normal":
-            <>
-              <h5>{part.name} {part.exerciseCount}</h5>
-              <p>{part.description}</p>
-            </>
-          break;
-          case "groupProject":
-
-        }
-      })}
-      </>
-    )
-  }
+  
   interface TotalProps {
     total: number
   }
