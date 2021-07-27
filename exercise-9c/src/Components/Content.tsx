@@ -6,7 +6,7 @@ import { CoursePart } from '../types';
     courseParts: CoursePart[];
   }
   
-  const Content = ({courseParts}: ContentProps) : JSX.Element => {
+  const Content = ({courseParts}: ContentProps): JSX.Element => {
     return(
       <>
         <Part courseParts = {courseParts}/>

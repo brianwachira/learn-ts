@@ -15,49 +15,50 @@ const assertNever = (value: never): never => {
     );
 }
 
-const Part = ({ courseParts }: partProps) => {
-    courseParts.forEach(part => {
-        switch (part.type) {
-            case "normal":
-                return(
-                    <>
-                        <h3>{part.name} {part.exerciseCount}</h3>
-                        <p>{part.description}</p>
-                    </>
-                    )
-                break;
-            case "groupProject":
-                <>
-                    <h3>{part.name} {part.exerciseCount}</h3>
-                    <p>Project exercises {part.groupProjectCount}</p>
-                </>
-                break;
-            case "submission":
-                <>
-                    <h3>{part.name} {part.exerciseCount}</h3>
-                    <p>{part.description}</p>
-                    <p>Submit to {part.exerciseSubmissionLink}</p>
-                </>
-                break;
-            case "special":
-                <>
-                    <h3>{part.name} {part.exerciseCount}</h3>
-                    <p>{part.description}</p>
-                    {part.requirements.map(requirement => {
-                     <p>{requirement}</p>   
-                    })}
-
-                </>
-                break;
-            default:
-                return assertNever(part);
-        }
-    });
+const Part = ({ courseParts }: partProps): JSX.Element  => {
 
     return (
-    <>
+        <>
+            {courseParts.map(part => {
+                switch (part.type) {
+                    case "normal":
+                        {console.log(part.name)}
+                          return(<>
+                                    <h3>{part.name} {part.exerciseCount}</h3>
+                                    <p>{part.description}</p>
+                                </>)
+                        
+                        break;
+                    case "groupProject":
+                        return(<>
+                            <h3>{part.name} {part.exerciseCount}</h3>
+                            <p>Project exercises {part.groupProjectCount}</p>
+                            </>)
+                        break;
+                    case "submission":
+                        return(<>
+                            <h3>{part.name} {part.exerciseCount}</h3>
+                            <p>{part.description}</p>
+                            <p>Submit to {part.exerciseSubmissionLink}</p>
+                            </>)
+                        break;
+                    case "special":
+                        return(<>
+                            <h3>{part.name} {part.exerciseCount}</h3>
+                            <p>{part.description}</p>
+                            {part.requirements.map(requirement => {
+                                <p>{requirement}</p>
+                            })}
 
-    </>)
+                        </>)
+                        break;
+                    default:
+                        return assertNever(part);
+                }
+            })
+            }
+        </>
+    )
 }
 
 export default Part;

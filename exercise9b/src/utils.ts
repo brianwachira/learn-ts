@@ -1,4 +1,4 @@
-import { NewPatientEntry, Gender } from "./types";
+import { NewPatientEntry, Gender, Entry } from "./types";
 
 const isString = (text: unknown): text is string => {
     return typeof text === 'string' || text instanceof String;
@@ -30,6 +30,10 @@ const isGender = (param: any): param is Gender => {
     return Object.values(Gender).includes(param);
 };
 
+// const isEntry = (param: any): param is Entry => {
+//     return Object.values(Entry).includes(param);
+// };
+
 const parseGender = (gender: unknown): Gender => {
     if(!gender || !isGender(gender)) {
         throw new Error('Incorrect or missing gender:' + gender);
@@ -44,15 +48,16 @@ const parseOccupation = (occupation: unknown) : string => {
     return occupation;
 };
 
-type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown };
+type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown, entries: Entry[] };
 
-const toNewPatientEntry = ({name, dateOfBirth, ssn, gender, occupation}: Fields): NewPatientEntry => {
+const toNewPatientEntry = ({name, dateOfBirth, ssn, gender, occupation, entries}: Fields): NewPatientEntry => {
     const newEntry : NewPatientEntry = {
         name: parseName(name),
         dateOfBirth: parseDate(dateOfBirth),
         ssn: parseSsn(ssn),
         gender: parseGender(gender),
-        occupation: parseOccupation(occupation)
+        occupation: parseOccupation(occupation),
+        entries
     };
 
     return newEntry;
