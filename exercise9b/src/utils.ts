@@ -50,7 +50,7 @@ const parseOccupation = (occupation: unknown) : string => {
 
 type Fields = { name: unknown, dateOfBirth: unknown, ssn: unknown, gender: unknown, occupation: unknown, entries: Entry[] };
 
-const toNewPatientEntry = ({name, dateOfBirth, ssn, gender, occupation, entries}: Fields): NewPatientEntry => {
+export  const toNewPatientEntry = ({name, dateOfBirth, ssn, gender, occupation, entries}: Fields): NewPatientEntry => {
     const newEntry : NewPatientEntry = {
         name: parseName(name),
         dateOfBirth: parseDate(dateOfBirth),
@@ -63,4 +63,12 @@ const toNewPatientEntry = ({name, dateOfBirth, ssn, gender, occupation, entries}
     return newEntry;
 };
 
-export default toNewPatientEntry;
+
+export  function ensure <T>(argument: T | undefined | null, message= 'This value was promised to be there.'): T {
+
+    if(argument === undefined || argument === null){
+        throw new TypeError(message);
+    }
+
+    return argument;
+}

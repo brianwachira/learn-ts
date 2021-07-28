@@ -25,6 +25,7 @@ const Entries = ({entries, diagnosis }: entryProps): JSX.Element => {
     };
     return (
         <>
+        <Header as="h3">Entries</Header>
             {entries?.map(entry => {
                 switch (entry.type) {
                     case 'HealthCheck':
@@ -92,7 +93,6 @@ const Patients = () => {
                     <Header as="h2">{patient?.name} <Icon name={setGenderIcon(patient?.gender)}/></Header>
                         <p>ssn: {patient?.ssn}</p>
                         <p>occupation: {patient?.occupation}</p>
-                    <Header as="h3">Entries</Header>
                     <Entries entries={patient?.entries} diagnosis={diagnosis}/>
                 </Container>
 
