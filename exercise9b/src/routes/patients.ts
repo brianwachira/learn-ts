@@ -1,14 +1,7 @@
 import express from 'express';
 import patientService from '../services/patientService';
-import {toNewPatientEntry} from '../utils';
-// {
-//     "id": "d2773336-f723-11e9-8f0b-362b9e155667",
-//     "name": "John McClane",
-//     "dateOfBirth": "1986-07-09",
-//     "ssn": "090786-122X",
-//     "gender": "male",
-//     "occupation": "New york city cop"
-// }
+import { toNewPatientEntry, toNewHospitalEntryfield, toNewOccupationalHealthcare, toNewHealthCheckEntry } from '../utils';
+
 const router = express.Router();
 
 router.get('/', (__req, res) => {
@@ -18,7 +11,7 @@ router.get('/', (__req, res) => {
 router.get('/:id', (req, res) => {
     const patient = patientService.findById(String(req.params.id));
 
-    if(patient) {
+    if (patient) {
         res.send(patient);
     } else {
         res.sendStatus(404);
@@ -26,13 +19,41 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    try{
+    try {
         const newPatientEntry = toNewPatientEntry(req.body);
         const addedEntry = patientService.addPatient(newPatientEntry);
 
         res.json(addedEntry);
 
-    }catch(e) {
+    } catch (e) {
+        res.status(400).send(e.message);
+    }
+});
+
+router.post('/:id/entries', (req, res) => {
+    try {
+
+        switch (req.body['type']) {
+            case 'OccupationalHealthcare':
+                const newOccupationalHealthcareEntry = toNewOccupationalHealthcare(req.body);
+
+                res.json(patientService.addEntry(String(req.params.id), newOccupationalHealthcareEntry));
+                break;
+            case 'Hospital':
+                const newHospitalEntry = toNewHospitalEntryfield(req.body);
+                res.json(patientService.addEntry(String(req.params.id), newHospitalEntry));
+                break;
+            case 'HealthCheck':
+                const newHealthCheckEntry = toNewHealthCheckEntry(req.body);
+                res.json(patientService.addEntry(String(req.params.id), newHealthCheckEntry));
+                break;
+            default:
+                res.status(400).json('not applicale');
+                break;
+        }
+
+
+    } catch (e) {
         res.status(400).send(e.message);
     }
 });
